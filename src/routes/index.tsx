@@ -6,6 +6,7 @@ import CheckEmail from '../pages/CheckEmail.tsx';
 import CheckPassword from '../pages/CheckPassword.tsx';
 import Home from '../pages/Home.tsx';
 import MessagePage from '../components/MessagePage.tsx';
+import AuthLayout from '../layout/index.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -14,13 +15,25 @@ export const router = createBrowserRouter([
     children: [
       {
         path: 'register',
-        element: <Register />
+        element: (
+          <AuthLayout>
+            <Register />
+          </AuthLayout>
+        )
       }, {
         path: 'email',
-        element: <CheckEmail />
+        element: (
+          <AuthLayout>
+            <CheckEmail />
+          </AuthLayout>
+        )
       }, {
         path: 'password',
-        element: <CheckPassword />
+        element: (
+          <AuthLayout>
+            <CheckPassword />
+          </AuthLayout>
+        )
       }, {
         path: '',
         element: <Home />,
