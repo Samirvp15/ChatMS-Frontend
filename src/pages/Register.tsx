@@ -1,6 +1,7 @@
 
 import React, { ChangeEvent, useState } from 'react'
-import {IoClose} from 'react-icons/io5'
+import { IoClose } from 'react-icons/io5'
+import { Link } from 'react-router-dom'
 
 const dataUser = {
   name: '',
@@ -32,13 +33,27 @@ export default function Register() {
     setUploadPhoto(file)
   }
 
+
+  const handleClearUploadPhoto = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    setUploadPhoto(undefined)
+  }
+
+  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    console.log(data)
+  }
+
+
+
   return (
     <div className=' mt-5'>
-      <div className=' bg-white w-full max-w-sm mx-2 rounded overflow-hidden p-4'>
+      <div className=' bg-white w-full max-w-sm  rounded overflow-hidden p-4 mx-auto'>
         <h3>Bienvenidos a Chat MS</h3>
-       
 
-        <form action="" className=' grid gap-4'>
+
+        <form onSubmit={handleSubmit} className=' grid gap-4'>
           <div className=' flex flex-col gap-1 mt-5'>
             <label htmlFor='name'>Nombre:</label>
             <input type="text"
@@ -59,7 +74,7 @@ export default function Register() {
               id="email"
               placeholder='Ingresa tu correo'
               className=' bg-slate-200 px-2 py-1 focus:outline-primary'
-              value={data.name}
+              value={data.email}
               onChange={handleChange}
               required
             />
@@ -72,7 +87,7 @@ export default function Register() {
               id="password"
               placeholder='Ingresa tu contraseña'
               className=' bg-slate-200 px-2 py-1 focus:outline-primary'
-              value={data.name}
+              value={data.password}
               onChange={handleChange}
               required
             />
@@ -89,9 +104,14 @@ export default function Register() {
                       : ' Subir foto de perfil'
                   }
                 </p>
-                <button>
-                  <IoClose className=' text-lg ml-2 hover:text-red-600' />
-                </button>
+                {
+                  uploadPhoto?.name && (
+                    <button className=' text-lg ml-2 hover:text-red-600' onClick={handleClearUploadPhoto}>
+                      <IoClose />
+                    </button>
+                  )
+                }
+
               </div>
             </label>
 
@@ -105,7 +125,10 @@ export default function Register() {
 
           </div>
 
+          <button className=' bg-primary text-lg px-4 py-1 hover:bg-secondary rounded my-3 font-bold transition-all hover:text-white'>Registrar</button>
+
         </form>
+        <p className=' text-center'>Ya tienes una cuenta?<Link to={'/email'} className=' text-primary font-bold hover:text-secondary ml-2 hover:underline'>Inicia Sesion</Link></p>
 
       </div>
     </div>
