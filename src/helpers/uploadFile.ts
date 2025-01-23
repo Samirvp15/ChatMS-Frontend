@@ -1,7 +1,5 @@
-import dotenv from 'dotenv'
-dotenv.config()
 
-const url = `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/auto/upload`
+const url = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/auto/upload`
 
 
  const uploadFile = async (file: File) => {

@@ -2,7 +2,7 @@
 import React, { ChangeEvent, useState } from 'react'
 import { IoClose } from 'react-icons/io5'
 import { Link } from 'react-router'
-//import  uploadFile  from '../helpers/uploadFile'
+import  uploadFile  from '../helpers/uploadFile'
 
 const dataUser = {
   name: '',
@@ -31,8 +31,8 @@ export default function Register() {
   const handleUploadPhoto = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0]
 
-    //const uploadPhoto = uploadFile(file)
-    //console.log(uploadPhoto)
+    const uploadPhoto = uploadFile(file)
+    console.log(uploadPhoto)
     setUploadPhoto(file)
   }
 
