@@ -8,6 +8,7 @@ const url = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_C
     data.append('upload_preset', 'ChatMS')
 
     const response = await fetch(url, {
+        method: 'POST',
         body: data
     })
     const responseData = await response.json()
