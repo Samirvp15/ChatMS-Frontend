@@ -1,8 +1,10 @@
 
 import React, { ChangeEvent, useState } from 'react'
 import { IoClose } from 'react-icons/io5'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import  uploadFile  from '../helpers/uploadFile'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
 const dataUser = {
   name: '',
@@ -16,6 +18,7 @@ export default function Register() {
 
   const [data, setData] = useState(dataUser)
   const [uploadPhoto, setUploadPhoto] = useState<File>()
+  const navigate = useNavigate()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -28,12 +31,18 @@ export default function Register() {
     })
   }
 
-  const handleUploadPhoto = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleUploadPhoto = async(e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0]
 
-    const uploadPhoto = uploadFile(file)
-    console.log(uploadPhoto)
+    const uploadPhoto = await uploadFile(file)
     setUploadPhoto(file)
+
+    setData((prev)=>{
+      return {
+        ...prev,
+        profile_pic: uploadPhoto.url
+      }
+    })
   }
 
 
@@ -42,8 +51,28 @@ export default function Register() {
     setUploadPhoto(undefined)
   }
 
-  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    const url = `${import.meta.env.VITE_BACKEND_URL}/api/register`
+    
+    try {
+
+      const response = await axios.post(url,data)
+      toast.success(response.data.message) 
+      if(response.data.success){
+        setData(dataUser)
+        navigate('/email')
+      }     
+     
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error((error.response?.data?.message))
+        
+      } else {
+        toast.error('Ocurrio un error inesperado')
+      }
+    }
 
     console.log(data)
   }
