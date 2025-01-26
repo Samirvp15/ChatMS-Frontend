@@ -1,3 +1,4 @@
+import { memo, useMemo } from "react";
 import { PiUserCircle } from "react-icons/pi";
 
 
@@ -10,7 +11,7 @@ interface AvatarProps {
 }
 
 
-export default function Avatar({ name, imageURL, width, height }: AvatarProps) {
+ function Avatar({ name, imageURL, width, height }: AvatarProps) {
 
     let avatarName = ""
     if (name) {
@@ -47,10 +48,13 @@ export default function Avatar({ name, imageURL, width, height }: AvatarProps) {
         "bg-coolGray-200",
     ]
 
-    const ramdomNumber = Math.floor(Math.random() * bgColor.length)
+  // Fijar el color de fondo con base en el nombre
+  const ramdomNumber = useMemo(() => {
+    return Math.floor(Math.random() * bgColor.length);
+  }, []) // Solo se calcula una vez cuando el componente se monta.
 
-    return (
-        <div className={` text-slate-800 overflow-hidden rounded-full shadow border text-xl font-bold ${bgColor[ramdomNumber]}`}  style={{width: width+"px", height: height+"px"}}>
+  return (
+        <div className={` text-slate-800 flex justify-center items-center overflow-hidden rounded-full shadow border text-xl font-bold`}  style={{width: width+"px", height: height+"px"}}>
             {
                 imageURL ? (
                     <img
@@ -58,11 +62,11 @@ export default function Avatar({ name, imageURL, width, height }: AvatarProps) {
                         width={width}
                         height={height}
                         alt={name}
-                        className=" overflow-hidden rounded-full"
+                        
                     />
                 ) : (
                     name ? (
-                        <div style={{width: width+"px", height: height+"px"}} className=" overflow-hidden rounded-full flex justify-center items-center">
+                        <div style={{width: width+"px", height: height+"px"}} className={` overflow-hidden rounded-full flex justify-center items-center ${bgColor[ramdomNumber]}`}>
                             {avatarName}
                         </div>
                     ) : (
@@ -73,3 +77,6 @@ export default function Avatar({ name, imageURL, width, height }: AvatarProps) {
         </div>
     )
 }
+
+// Usar React.memo para evitar renderizados innecesarios
+export default memo(Avatar);

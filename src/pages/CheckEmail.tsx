@@ -82,7 +82,7 @@ export default function CheckEmail() {
           </div>
 
 
-          <button className=' bg-primary text-lg px-4 py-1 hover:bg-secondary rounded my-3 font-bold transition-all hover:text-white'>Inicia Sesión</button>
+          <button className=' bg-primary text-lg px-4 py-1 hover:bg-secondary rounded my-3 font-bold transition-all hover:text-white'>Ingresa tu correo</button>
 
         </form>
         <p className=' text-center'>Usuario nuevo?<Link to={'/register'} className=' text-primary font-bold hover:text-secondary ml-2 hover:underline'>Registrate</Link></p>

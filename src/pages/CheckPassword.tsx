@@ -1,5 +1,5 @@
 
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router'
 import axios from 'axios'
 import toast from 'react-hot-toast'
@@ -16,7 +16,12 @@ export default function CheckPassword() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  console.log('location: ', location)
+  useEffect(()=>{
+    if(!location?.state?.name){
+      navigate('/email')
+    }
+  },[])
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
 
@@ -36,11 +41,14 @@ export default function CheckPassword() {
 
     try {
 
-      const response = await axios.post(url, data)
+      const response = await axios.post(url, {
+        id: location?.state?._id,
+        password: data.password
+      })
       toast.success(response.data.message)
       if (response.data.success) {
         setData({ password: '' })
-        navigate('/password')
+        navigate('/')
       }
 
     } catch (error) {
@@ -54,8 +62,7 @@ export default function CheckPassword() {
   }
 
 
-
-  return (
+   return (
     <div className=' mt-5'>
       <div className=' bg-white w-full max-w-md  rounded overflow-hidden p-4 mx-auto'>
         <div className="w-fit mx-auto mb-2 flex justify-center items-center flex-col">
@@ -74,11 +81,11 @@ export default function CheckPassword() {
 
 
           <div className=' flex flex-col gap-1'>
-            <label htmlFor='email'>Correo:</label>
-            <input type="email"
-              name="email"
-              id="email"
-              placeholder='Ingresa tu correo'
+            <label htmlFor='password'>Contraseña:</label>
+            <input type="password"
+              name="password"
+              id="password"
+              placeholder='Ingresa tu contraseña'
               className=' bg-slate-200 px-2 py-1 focus:outline-primary'
               value={data.password}
               onChange={handleChange}
@@ -90,7 +97,7 @@ export default function CheckPassword() {
           <button className=' bg-primary text-lg px-4 py-1 hover:bg-secondary rounded my-3 font-bold transition-all hover:text-white'>Inicia Sesión</button>
 
         </form>
-        <p className=' text-center'>Usuario nuevo?<Link to={'/register'} className=' text-primary font-bold hover:text-secondary ml-2 hover:underline'>Registrate</Link></p>
+        <p className=' text-center'><Link to={'/forgot-password'} className=' text-primary font-bold hover:text-secondary ml-2 hover:underline'>Olvidaste la contraseña?</Link></p>
 
       </div>
     </div>
