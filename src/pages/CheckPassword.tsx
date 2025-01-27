@@ -41,9 +41,12 @@ export default function CheckPassword() {
 
     try {
 
+      //Withcredentials: true is used to send the cookie to the server and receive it from the server
       const response = await axios.post(url, {
         id: location?.state?._id,
-        password: data.password
+        password: data.password,
+      }, {
+        withCredentials: true
       })
       toast.success(response.data.message)
       if (response.data.success) {
