@@ -4,13 +4,17 @@ import './index.css'
 //import App from './App.tsx'
 //import { RouterProvider } from 'react-router'
 import { AppRouter } from './routes'
-//import { router } from './routes/index.tsx'
+import { Provider } from 'react-redux'
+import  {store}  from './redux/store'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     {/* <RouterProvider router={router}>
 
     </RouterProvider> */}
+    <Provider store={store}>
     <AppRouter />
+
+    </Provider>
   </StrictMode>,
 )

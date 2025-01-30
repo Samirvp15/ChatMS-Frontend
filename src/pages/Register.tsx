@@ -73,8 +73,6 @@ export default function Register() {
         toast.error('Ocurrio un error inesperado')
       }
     }
-
-    console.log(data)
   }
 
 

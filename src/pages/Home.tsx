@@ -2,20 +2,25 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { Outlet } from 'react-router';
+import { useAppSelector } from '../hooks/reduxHook';
 
 
 export default function Home() {
+
+  const user = useAppSelector(state => state.user)
+
+  console.log(user)
 
   const fetchUserDetails = async()=>{
 
     try {
       const url = `${import.meta.env.VITE_BACKEND_URL}/api/user-details`
 
-      const response = await axios({
+      await axios({
         url: url,
         withCredentials: true
       })
-      console.log(response)
+ 
     } catch (error) {
       if (axios.isAxiosError(error)) {
        console.log(error)

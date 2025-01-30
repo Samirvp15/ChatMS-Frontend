@@ -3,8 +3,9 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router'
 import axios from 'axios'
 import toast from 'react-hot-toast'
-//import { PiUserCircle } from "react-icons/pi";
 import Avatar from '../components/Avatar';
+import { setToken } from '../redux/userSlice';
+import { useAppDispatch } from '../hooks/reduxHook';
 
 
 
@@ -15,12 +16,13 @@ export default function CheckPassword() {
 
   const navigate = useNavigate()
   const location = useLocation()
+  const dispatch = useAppDispatch()
 
-  useEffect(()=>{
-    if(!location?.state?.name){
+  useEffect(() => {
+    if (!location?.state?.name) {
       navigate('/email')
     }
-  },[])
+  }, [])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -50,6 +52,9 @@ export default function CheckPassword() {
       })
       toast.success(response.data.message)
       if (response.data.success) {
+        dispatch(setToken(response.data.token))
+        localStorage.setItem('token', response.data.token)
+
         setData({ password: '' })
         navigate('/')
       }
@@ -65,7 +70,7 @@ export default function CheckPassword() {
   }
 
 
-   return (
+  return (
     <div className=' mt-5'>
       <div className=' bg-white w-full max-w-md  rounded overflow-hidden p-4 mx-auto'>
         <div className="w-fit mx-auto mb-2 flex justify-center items-center flex-col">
