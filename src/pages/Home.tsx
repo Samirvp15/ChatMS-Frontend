@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
 import { logout, setUser } from '../redux/userSlice';
+import Sidebar from '../components/Sidebar';
 
 
 export default function Home() {
@@ -45,8 +46,10 @@ export default function Home() {
 
   return (
     <>
-      <div>
-        Home
+      <div className="grid  md:grid-rows-1 md:grid-cols-5 h-screen max-h-screen">
+        <section className='bg-white'>
+          <Sidebar />
+        </section>
         <section>
           <Outlet />
         </section>
