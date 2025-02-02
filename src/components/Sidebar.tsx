@@ -5,12 +5,13 @@ import { NavLink } from "react-router";
 import Avatar from "./Avatar";
 import { useAppSelector } from "../hooks/reduxHook";
 import { useState } from "react";
+import EditUserDetails from "./EditUserDetails";
 
 
 export default function Sidebar() {
 
     const user = useAppSelector(state => state.user)
-    const [editUserOpen, setEditUserOpen] = useState(false)
+    const [editUserOpen, setEditUserOpen] = useState(true)
 
     return (
         <div className=" w-full h-full">
@@ -49,6 +50,11 @@ export default function Sidebar() {
                 </div>
 
             </div>
+            {
+                editUserOpen && (
+                    <EditUserDetails onClose={()=>setEditUserOpen(false)} data={user} />
+                )
+            }
         </div>
     )
 }

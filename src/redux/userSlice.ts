@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 // Define a type for the slice state
-interface CounterState {
+export interface CounterState {
     _id: string,
     name: string,
     email: string,
