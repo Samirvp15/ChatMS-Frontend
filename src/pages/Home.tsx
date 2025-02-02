@@ -2,18 +2,17 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router';
-import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
+import { useAppDispatch } from '../hooks/reduxHook';
 import { logout, setUser } from '../redux/userSlice';
 import Sidebar from '../components/Sidebar';
 
 
 export default function Home() {
 
-  const user = useAppSelector(state => state.user)
+  //const user = useAppSelector(state => state.user)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  console.log(user)
 
   const fetchUserDetails = async () => {
 
