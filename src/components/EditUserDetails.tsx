@@ -1,10 +1,11 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react"
-import { CounterState } from "../redux/userSlice"
+import { CounterState, setUser } from "../redux/userSlice"
 import Avatar from "./Avatar"
 import Divider from "./Divider"
 import uploadFile from "../helpers/uploadFile"
 import axios from "axios"
 import toast from "react-hot-toast"
+import { useAppDispatch } from "../hooks/reduxHook"
 
 
 interface EditUserDetailsProps {
@@ -19,6 +20,8 @@ export default function EditUserDetails({ onClose, user }: EditUserDetailsProps)
         name: user.name,
         profile_pic: user.profile_pic,
     })
+
+    const dispatch = useAppDispatch()
     const uploadPhotoRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -73,13 +76,10 @@ export default function EditUserDetails({ onClose, user }: EditUserDetailsProps)
                 withCredentials: true
             })
             toast.success(response.data.message)
-            //   if(response.data.success){
-            //     setUserEditData({
-            //         name: '',
-            //         profile_pic: '',
-            //     })
-            //     navigate('/email')
-            //   }     
+              if(response.data.success){
+                dispatch(setUser(response.data.data))
+                onClose()
+              }     
 
         } catch (error) {
             if (axios.isAxiosError(error)) {
