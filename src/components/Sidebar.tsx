@@ -15,7 +15,7 @@ export default function Sidebar() {
     const user = useAppSelector(state => state.user)
     const [editUserOpen, setEditUserOpen] = useState(false)
     const [allUser, setAllUser] = useState([])
-    const [openSearchUser, setOpenSearchUser] = useState(false)
+    const [openSearchUser, setOpenSearchUser] = useState(true)
 
     return (
         <div className=" w-full h-full grid grid-cols-[auto_1fr]">

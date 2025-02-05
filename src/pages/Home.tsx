@@ -24,7 +24,6 @@ export default function Home() {
         url: url,
         withCredentials: true
       })
-      console.log(response)
       dispatch(setUser(response.data.data))
 
       if (response.data.data.logout) {
