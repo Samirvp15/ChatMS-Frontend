@@ -4,13 +4,18 @@ import Loading from "./Loading";
 import UserSearchCard from "./UserSearchCard";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { UserState } from "../redux/userSlice";
 
 
+interface SearchUserProps {
+    onClose: () => void
+}
 
-export default function SearchUser() {
 
-    const [searchUser, setSearchUser] = useState([])
-    const [loading, setLoading] = useState(true)
+export default function SearchUser({ onClose }: SearchUserProps) {
+
+    const [searchUser, setSearchUser] = useState<UserState[]>([])
+    const [loading, setLoading] = useState(false)
     const [search, setSearch] = useState('')
 
     const handleSearchUser = async () => {
@@ -18,9 +23,11 @@ export default function SearchUser() {
         const url = `${import.meta.env.VITE_BACKEND_URL}/api/search-user`
 
         try {
+            setLoading(true)
             const response = await axios.post(url, {
                 search: search
             })
+            setLoading(false)
 
             setSearchUser(response.data.data)
         } catch (error) {
@@ -33,9 +40,9 @@ export default function SearchUser() {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         handleSearchUser()
-    },[search])
+    }, [search])
 
     console.log(searchUser)
 
@@ -47,7 +54,7 @@ export default function SearchUser() {
                         type="text"
                         placeholder="Busca usuarios por nombre o correo"
                         className=" w-full outline-none py-1 h-full px-2"
-                        onChange={(e)=>setSearch(e.target.value)}
+                        onChange={(e) => setSearch(e.target.value)}
                         value={search}
                     />
 
@@ -73,7 +80,7 @@ export default function SearchUser() {
                         searchUser.length !== 0 && !loading && (
                             searchUser.map((user, index) => {
                                 return (
-                                    <UserSearchCard key={user?._id} user={user} />
+                                    <UserSearchCard key={user?._id} user={user} onClose={onClose} />
                                 )
                             })
                         )

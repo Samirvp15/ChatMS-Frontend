@@ -75,7 +75,7 @@ export default function Sidebar() {
 
             {
                 openSearchUser && (
-                    <SearchUser onClose={()=>setOpenSearchUser()} />
+                    <SearchUser onClose={()=>setOpenSearchUser(false)} />
                 )
             }
         </div>

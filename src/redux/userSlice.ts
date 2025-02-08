@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 // Define a type for the slice state
-export interface CounterState {
+export interface UserState {
     _id: string,
     name: string,
     email: string,
@@ -11,7 +11,7 @@ export interface CounterState {
 }
 
 // Define the initial state using that type
-const initialState: CounterState = {
+const initialState: UserState = {
     _id: '',
     name: '',
     email: '',
