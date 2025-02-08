@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react"
-import { CounterState, setUser } from "../redux/userSlice"
+import { setUser, UserState } from "../redux/userSlice"
 import Avatar from "./Avatar"
 import Divider from "./Divider"
 import uploadFile from "../helpers/uploadFile"
@@ -10,7 +10,7 @@ import { useAppDispatch } from "../hooks/reduxHook"
 
 interface EditUserDetailsProps {
     onClose: () => void,
-    user: CounterState
+    user: UserState
 }
 
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IoSearchOutline } from "react-icons/io5";
+import { IoClose, IoSearchOutline } from "react-icons/io5";
 import Loading from "./Loading";
 import UserSearchCard from "./UserSearchCard";
 import axios from "axios";
@@ -44,7 +44,6 @@ export default function SearchUser({ onClose }: SearchUserProps) {
         handleSearchUser()
     }, [search])
 
-    console.log(searchUser)
 
     return (
         <div className=" fixed top-0 bottom-0 right-0 left-0 bg-slate-700/50 p-2 ">
@@ -78,7 +77,7 @@ export default function SearchUser({ onClose }: SearchUserProps) {
 
                     {
                         searchUser.length !== 0 && !loading && (
-                            searchUser.map((user, index) => {
+                            searchUser.map((user) => {
                                 return (
                                     <UserSearchCard key={user?._id} user={user} onClose={onClose} />
                                 )
@@ -86,7 +85,12 @@ export default function SearchUser({ onClose }: SearchUserProps) {
                         )
                     }
                 </div>
+            </div>
 
+            <div className=" absolute top-0 right-0 text-4xl md:mt-10 md:mr-10 lg:mr-50 mr-5 bg-slate-300 rounded-3xl ">
+                <button className="  p-2 hover:bg-slate-700 hover:text-white hover:rounded-3xl cursor-pointer" onClick={onClose}>
+                    <IoClose size={30} />
+                </button>
             </div>
         </div>
     )
