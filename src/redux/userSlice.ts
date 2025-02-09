@@ -7,6 +7,7 @@ export interface UserState {
     email: string,
     profile_pic: string,
     token: string,
+    onlineUser?: string
 
 }
 
@@ -35,18 +36,14 @@ export const userSlice = createSlice({
         setToken: (state, action) => {
             state.token = action.payload
         },
-        // logout: (state)=>{
-        //     state._id = ''
-        //     state.name = ''
-        //     state.email = ''
-        //     state.profile_pic = ''
-        //     state.token = ''
-        // }
-        logout: () => initialState
+        logout: () => initialState,
+        setOnlineUser: (state, action) => {
+            state.onlineUser = action.payload
+        }
 
     }
 })
 
-export const { setUser, setToken, logout } = userSlice.actions
+export const { setUser, setToken, logout, setOnlineUser } = userSlice.actions
 
 export default userSlice.reducer

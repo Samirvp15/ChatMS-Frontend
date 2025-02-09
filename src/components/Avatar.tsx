@@ -1,9 +1,10 @@
 import { memo, useMemo } from "react";
 import { PiUserCircle } from "react-icons/pi";
+import { useAppSelector } from "../hooks/reduxHook";
 
 
 interface AvatarProps {
-    userId?: string,
+    userId: string,
     name: string,
     imageURL: string,
     width: number,
@@ -11,15 +12,17 @@ interface AvatarProps {
 }
 
 
- function Avatar({ name, imageURL, width, height }: AvatarProps) {
+function Avatar({ userId, name, imageURL, width, height }: AvatarProps) {
+
+    const onlineUser = useAppSelector(state => state.user.onlineUser)
 
     let avatarName = ""
     if (name) {
         const splitName = name.split(" ")
-        if(splitName.length > 1){
+        if (splitName.length > 1) {
             avatarName = splitName[0][0] + splitName[1][0]
-        }else{
-            avatarName  = splitName[0][0]
+        } else {
+            avatarName = splitName[0][0]
         }
     }
 
@@ -48,13 +51,15 @@ interface AvatarProps {
         "bg-coolGray-200",
     ]
 
-  // Fijar el color de fondo con base en el nombre
-  const ramdomNumber = useMemo(() => {
-    return Math.floor(Math.random() * bgColor.length);
-  }, []) // Solo se calcula una vez cuando el componente se monta.
+    // Fijar el color de fondo con base en el nombre
+    const ramdomNumber = useMemo(() => {
+        return Math.floor(Math.random() * bgColor.length);
+    }, []) // Solo se calcula una vez cuando el componente se monta.
 
-  return (
-        <div className={` text-slate-800 flex justify-center items-center overflow-hidden rounded-full shadow border text-xl font-bold`}  style={{width: width+"px", height: height+"px"}}>
+    const isOnline = onlineUser?.includes(userId)
+
+    return (
+        <div className={`  flex justify-center items-center  rounded-full shadow  text-xl font-bold relative`} style={{ width: width + "px", height: height + "px" }}>
             {
                 imageURL ? (
                     <img
@@ -62,18 +67,29 @@ interface AvatarProps {
                         width={width}
                         height={height}
                         alt={name}
-                        
+                        className=" overflow-hidden rounded-full"
+
                     />
                 ) : (
                     name ? (
-                        <div style={{width: width+"px", height: height+"px"}} className={` overflow-hidden rounded-full flex justify-center items-center ${bgColor[ramdomNumber]}`}>
+                        <div style={{ width: width + "px", height: height + "px" }} className={` overflow-hidden rounded-full flex justify-center items-center ${bgColor[ramdomNumber]}`}>
                             {avatarName}
                         </div>
                     ) : (
-                        <PiUserCircle size={80}/>
+                        <PiUserCircle size={80} />
                     )
                 )
             }
+
+            {
+                isOnline && (
+                    <div className=" bg-slate-200 p-1 absolute bottom-1 -right-2.5  z-10 rounded-full">
+                        <div className=" bg-green-500 p-1.5 relative bottom-0 right-0  z-10 rounded-full"></div>
+
+                    </div>
+                )
+            }
+
         </div>
     )
 }

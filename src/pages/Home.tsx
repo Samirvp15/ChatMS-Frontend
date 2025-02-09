@@ -2,19 +2,19 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
-import { useAppDispatch } from '../hooks/reduxHook';
-import { logout, setUser } from '../redux/userSlice';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
+import { logout, setOnlineUser, setUser } from '../redux/userSlice';
 import Sidebar from '../components/Sidebar';
-
+import io from 'socket.io-client'
 
 export default function Home() {
 
-  //const user = useAppSelector(state => state.user)
+  const user = useAppSelector(state => state.user)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const location = useLocation()
 
-
+console.log('User:: ', user)
   const fetchUserDetails = async () => {
 
     try {
@@ -41,6 +41,28 @@ export default function Home() {
   useEffect(() => {
     fetchUserDetails()
   }, [])
+
+  // Socket Client Connection
+  useEffect(()=>{
+    const socketConnection = io(`${import.meta.env.VITE_BACKEND_URL}`,{
+      auth: {
+        token: localStorage.getItem('token')
+      },
+      transports: ["websocket"],
+    })
+
+    socketConnection.on('onlineUser',(data)=>{
+      dispatch(setOnlineUser(data))
+    })
+
+
+    return ()=>{
+      socketConnection.disconnect()
+    }
+
+  },[])
+
+
 
   const basePath = location.pathname === '/'
 
