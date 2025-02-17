@@ -17,6 +17,7 @@ interface EditUserDetailsProps {
 export default function EditUserDetails({ onClose, user }: EditUserDetailsProps) {
 
     const [data, setData] = useState({
+        userId: user._id,
         name: user.name,
         profile_pic: user.profile_pic,
     })
@@ -76,10 +77,10 @@ export default function EditUserDetails({ onClose, user }: EditUserDetailsProps)
                 withCredentials: true
             })
             toast.success(response.data.message)
-              if(response.data.success){
+            if (response.data.success) {
                 dispatch(setUser(response.data.data))
                 onClose()
-              }     
+            }
 
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -95,7 +96,7 @@ export default function EditUserDetails({ onClose, user }: EditUserDetailsProps)
 
 
     return (
-        <div className=" fixed top-0 bottom-0 left-0 right-0 bg-gray-700/40  flex justify-center items-center">
+        <div className=" absolute top-0 bottom-0 left-0 right-0 bg-gray-700/40  flex justify-center items-center z-50">
             <div className=" bg-white p-4 m-1 rounded w-full max-w-sm">
                 <h2 className=" font-semibold text-3xl">Detalles de Perfil</h2>
                 <p className=" text-sm">Edita los datos del perfil</p>
@@ -106,6 +107,7 @@ export default function EditUserDetails({ onClose, user }: EditUserDetailsProps)
                         <div>Foto de Perfil:</div>
                         <div className="w-fit mx-auto mb-2 flex justify-center items-center flex-col">
                             <Avatar
+                                userId={data.userId}
                                 name={data.name}
                                 imageURL={data.profile_pic}
                                 height={150}

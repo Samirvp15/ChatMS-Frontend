@@ -46,7 +46,7 @@ export default function SearchUser({ onClose }: SearchUserProps) {
 
 
     return (
-        <div className=" fixed top-0 bottom-0 right-0 left-0 bg-slate-700/50 p-2 ">
+        <div className=" fixed top-0 bottom-0 right-0 left-0 bg-slate-700/50 p-8 sm:p-2 z-50">
             <div className=" w-full max-w-lg mx-auto mt-10 ">
                 <div className="bg-slate-200 rounded-xl p-1 overflow-hidden flex">
                     <input
@@ -87,7 +87,7 @@ export default function SearchUser({ onClose }: SearchUserProps) {
                 </div>
             </div>
 
-            <div className=" absolute top-0 right-0 text-4xl md:mt-10 md:mr-10 lg:mr-50 mr-5 bg-slate-300 rounded-3xl ">
+            <div className=" absolute top-0 right-0 text-4xl mt-3 mx-3  lg:mx-30  bg-slate-300 rounded-3xl ">
                 <button className="  p-2 hover:bg-slate-700 hover:text-white hover:rounded-3xl cursor-pointer" onClick={onClose}>
                     <IoClose size={30} />
                 </button>

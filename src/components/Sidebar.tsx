@@ -52,7 +52,7 @@ export default function Sidebar() {
                     <h2 className=" text-xl font-bold p-4 text-slate-800 h-16">Mensajes</h2>
                 </div>
                 <div className=" bg-slate-400 p-[0.5px]"></div>
-                <div className=" h-[calc(100vh-64px)] overflow-x-hidden overflow-y-auto">
+                <div className=" h-[calc(100vh-64px)] overflow-x-hidden overflow-y-auto p-5">
                     {
                         allUser.length === 0 && (
                             <div className="mt-16">

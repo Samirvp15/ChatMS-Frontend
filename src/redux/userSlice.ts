@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { Socket } from "socket.io-client";
+
 
 // Define a type for the slice state
 export interface UserState {
@@ -7,7 +9,8 @@ export interface UserState {
     email: string,
     profile_pic: string,
     token: string,
-    onlineUser?: string
+    onlineUser?: string,
+    socketConnection?: Socket | null
 
 }
 
@@ -17,8 +20,8 @@ const initialState: UserState = {
     name: '',
     email: '',
     profile_pic: '',
-    token: ''
-
+    token: '',
+    socketConnection: null
 }
 
 export const userSlice = createSlice({
@@ -39,11 +42,14 @@ export const userSlice = createSlice({
         logout: () => initialState,
         setOnlineUser: (state, action) => {
             state.onlineUser = action.payload
+        },
+        setSocketConnection: (state, action)=>{
+            state.socketConnection = action.payload
         }
 
     }
 })
 
-export const { setUser, setToken, logout, setOnlineUser } = userSlice.actions
+export const { setUser, setToken, logout, setOnlineUser, setSocketConnection } = userSlice.actions
 
 export default userSlice.reducer

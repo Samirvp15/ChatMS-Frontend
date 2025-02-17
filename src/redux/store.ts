@@ -4,7 +4,11 @@ import userReducer from './userSlice'
 export const store = configureStore({
   reducer: {
     user: userReducer,
-  }
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false
+    }),
 })
 
 // Get the type of our store variable
