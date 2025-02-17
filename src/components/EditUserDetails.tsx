@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react"
-import { setUser, UserState } from "../redux/userSlice"
+import { setUser, UserDetails } from "../redux/userSlice"
 import Avatar from "./Avatar"
 import Divider from "./Divider"
 import uploadFile from "../helpers/uploadFile"
@@ -10,7 +10,7 @@ import { useAppDispatch } from "../hooks/reduxHook"
 
 interface EditUserDetailsProps {
     onClose: () => void,
-    user: UserState
+    user: UserDetails
 }
 
 
@@ -29,10 +29,9 @@ export default function EditUserDetails({ onClose, user }: EditUserDetailsProps)
         setData((prev) => {
             return {
                 ...prev,
-                ...user
             }
         })
-    }, [user])
+    }, [])
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -66,7 +65,6 @@ export default function EditUserDetails({ onClose, user }: EditUserDetailsProps)
     }
 
 
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault()
         const url = `${import.meta.env.VITE_BACKEND_URL}/api/update-user`
@@ -76,6 +74,7 @@ export default function EditUserDetails({ onClose, user }: EditUserDetailsProps)
             const response = await axios.post(url, data, {
                 withCredentials: true
             })
+            console.log('response', response)
             toast.success(response.data.message)
             if (response.data.success) {
                 dispatch(setUser(response.data.data))
@@ -87,6 +86,7 @@ export default function EditUserDetails({ onClose, user }: EditUserDetailsProps)
                 toast.error((error.response?.data?.message))
 
             } else {
+                console.log(error)
                 toast.error('Ocurrio un error inesperado')
             }
         }

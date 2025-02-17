@@ -2,6 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 import { Socket } from "socket.io-client";
 
 
+
+export interface UserDetails {
+    _id: string,
+    name: string,
+    profile_pic: string,
+}
+
 // Define a type for the slice state
 export interface UserState {
     _id: string,
@@ -9,7 +16,7 @@ export interface UserState {
     email: string,
     profile_pic: string,
     token: string,
-    onlineUser?: string,
+    onlineUser?: string[],
     socketConnection?: Socket | null
 
 }

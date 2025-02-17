@@ -137,7 +137,7 @@ export default function MessagePage() {
 
     if (message.text || message.imageUrl || message.videoUrl) {
       if (socketConnection) {
-        socketConnection.emit('new message', {
+        socketConnection.emit('new-message', {
           sender: user?._id,
           receiver: params.userId,
           text: message.text,

@@ -2,17 +2,18 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
-import { useAppDispatch, useAppSelector } from '../hooks/reduxHook';
+import { useAppDispatch } from '../hooks/reduxHook';
 import { logout, setOnlineUser, setSocketConnection, setUser } from '../redux/userSlice';
 import Sidebar from '../components/Sidebar';
 import io from 'socket.io-client'
 
 export default function Home() {
 
-  const user = useAppSelector(state => state.user)
+  //const user = useAppSelector(state => state.user)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const location = useLocation()
+
 
   const fetchUserDetails = async () => {
 
@@ -60,7 +61,7 @@ export default function Home() {
       socketConnection.disconnect()
     }
 
-  }, [])
+  }, [dispatch])
 
 
 

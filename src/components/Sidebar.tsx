@@ -1,13 +1,15 @@
 import { IoChatbubbleEllipses } from "react-icons/io5";
 import { FaUserPlus } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import Avatar from "./Avatar";
 import { useAppSelector } from "../hooks/reduxHook";
 import { useState } from "react";
 import EditUserDetails from "./EditUserDetails";
 import { FiArrowUpLeft } from "react-icons/fi";
 import SearchUser from "./SearchUser";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/userSlice";
 
 
 export default function Sidebar() {
@@ -16,6 +18,15 @@ export default function Sidebar() {
     const [editUserOpen, setEditUserOpen] = useState(false)
     const [allUser, setAllUser] = useState([])
     const [openSearchUser, setOpenSearchUser] = useState(false)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+
+    const handleLogout = ()=>{
+        dispatch(logout())
+        navigate("/email")
+        localStorage.clear()
+    }
 
     return (
         <div className=" w-full h-full grid grid-cols-[auto_1fr]">
@@ -32,7 +43,7 @@ export default function Sidebar() {
                 </div>
 
                 <div className="flex flex-col items-center gap-4">
-                    <button className="w-16 h-12 mx-auto flex justify-center items-center cursor-pointer hover:bg-emerald-300 hover:rounded-4xl hover:text-white" title="Logout">
+                    <button className="w-16 h-12 mx-auto flex justify-center items-center cursor-pointer hover:bg-emerald-300 hover:rounded-4xl hover:text-white" title="Logout" onClick={handleLogout}>
                         <BiLogOut size={25} />
                     </button>
                     <button className=" cursor-pointer z-0 hover:bg-emerald-300 hover:rounded-full p-1" title="User Profile" onClick={() => setEditUserOpen(true)}>

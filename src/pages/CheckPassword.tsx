@@ -76,6 +76,7 @@ export default function CheckPassword() {
         <div className="w-fit mx-auto mb-2 flex justify-center items-center flex-col">
           {/* <PiUserCircle size={80} /> */}
           <Avatar
+            userId={location.state?._id}
             name={location.state?.name}
             imageURL={location.state?.profile_pic}
             height={70}
