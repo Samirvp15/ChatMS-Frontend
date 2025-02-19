@@ -3,6 +3,38 @@ import { Socket } from "socket.io-client";
 
 
 
+export interface User {
+  _id: string;
+  email: string;
+  name: string;
+  profile_pic: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Message {
+  _id: string;
+  text: string;
+  imageURL: string;
+  videoURL: string;
+  msgByUserId: string;
+  seen: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface AllUserType {
+  lastMsg: Message;
+  receiver: User;
+  sender: User;
+  unseenMsg: number;
+  userDetails: User;
+  _id: string;
+}
+
+
+
 export interface UserDetails {
     _id: string,
     name: string,

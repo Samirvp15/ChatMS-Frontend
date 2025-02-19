@@ -1,5 +1,5 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react"
-import { Link, useParams } from "react-router"
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react"
+import { Link, useLocation, useParams } from "react-router"
 import { useAppSelector } from "../hooks/reduxHook"
 import Avatar from "./Avatar"
 import { HiDotsVertical } from 'react-icons/hi'
@@ -23,14 +23,15 @@ export default function MessagePage() {
     online: false
   }
 
-  // interface messageData  {
-  //   text: "",
-  //   imageUrl: "",
-  //   videoUrl: "",
-  //   createdAt: "",
-  //   msgByUserId: "",
-  // }
+  interface messageData  {
+    text: string,
+    imageURL: string,
+    videoURL: string,
+    createdAt?: string,
+    msgByUserId?: string,
+  }
 
+  const location = useLocation()
   const params = useParams()
   const user = useAppSelector(state => state.user)
   const socketConnection = useAppSelector(state => state.user.socketConnection)
@@ -39,10 +40,11 @@ export default function MessagePage() {
 
 
   const [openImageVideoUpload, setOpenImageVideoUpload] = useState(false)
-  const [message, setMessage] = useState({
+  const [message, setMessage] = useState<messageData>({
     text: "",
     imageURL: "",
-    videoURL: ""
+    videoURL: "",
+    
   })
   const [loading, setLoading] = useState(false)
   const [allMessage, setAllMessage] = useState([{
@@ -162,16 +164,21 @@ export default function MessagePage() {
           text: "",
           imageURL: "",
           videoURL: "",
-          //createdAt: "",
-          // msgByUserId: ""
+          createdAt: "",
+          msgByUserId: ""
         })
       }
     }
   }
+  const isCurrentUser = useMemo(
+    () => location.pathname === "/" + user._id,
+    [location.pathname,user._id]
+  );
+  
 
   return (
     <div className="flex flex-col h-full max-h-screen" >
-      <header className="sticky top-0 h-16 bg-primary z-10 flex justify-between items-center px-5">
+      <header className="sticky top-0 h-16 bg-primary z-10 flex justify-between items-center px-8">
         <div className=" flex items-center gap-5 text-white">
           <Link to={'/'} className="lg:hidden">
             <FaAngleLeft size={25} />
@@ -187,7 +194,7 @@ export default function MessagePage() {
           </div>
 
           <div>
-            <h3 className=" font-semibold text-lg ">{dataUser.name}</h3>
+            <h3 className=" font-semibold text-lg ">{dataUser.name}  {isCurrentUser && "(Tú)"}</h3>
             <p className="  text-sm">{
               dataUser.online ? <span className=" text-emerald-300">En linea</span> : <span className=" text-slate-400">Desconectado</span>
             }</p>

@@ -46,7 +46,7 @@ export default function SearchUser({ onClose }: SearchUserProps) {
 
 
     return (
-        <div className=" fixed top-0 bottom-0 right-0 left-0 bg-slate-700/50 p-8 sm:p-2 z-50">
+        <div className=" fixed top-0 bottom-0 right-0 left-0 bg-gray-700/40 p-8 sm:p-2 z-50">
             <div className=" w-full max-w-lg mx-auto mt-10 ">
                 <div className="bg-slate-200 rounded-xl p-1 overflow-hidden flex">
                     <input

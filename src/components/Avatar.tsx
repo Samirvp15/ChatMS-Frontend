@@ -1,4 +1,3 @@
-import { memo, useMemo } from "react";
 import { PiUserCircle } from "react-icons/pi";
 import { useAppSelector } from "../hooks/reduxHook";
 
@@ -12,7 +11,7 @@ interface AvatarProps {
 }
 
 
-function Avatar({ userId, name, imageURL, width, height }: AvatarProps) {
+export default function Avatar({ userId, name, imageURL, width, height }: AvatarProps) {
 
     const onlineUser = useAppSelector(state => state.user.onlineUser)
 
@@ -26,40 +25,11 @@ function Avatar({ userId, name, imageURL, width, height }: AvatarProps) {
         }
     }
 
-    const bgColor = [
-        "bg-blue-200",
-        "bg-green-200",
-        "bg-yellow-200",
-        "bg-red-200",
-        "bg-indigo-200",
-        "bg-pink-200",
-        "bg-purple-200",
-        "bg-gray-200",
-        "bg-teal-200",
-        "bg-cyan-200",
-        "bg-rose-200",
-        "bg-fuchsia-200",
-        "bg-emerald-200",
-        "bg-gray-200",
-        "bg-lime-200",
-        "bg-amber-200",
-        "bg-orange-200",
-        "bg-violet-200",
-        "bg-lightBlue-200",
-        "bg-warmGray-200",
-        "bg-trueGray-200",
-        "bg-coolGray-200",
-    ]
-
-    // Fijar el color de fondo con base en el nombre
-    const ramdomNumber = useMemo(() => {
-        return Math.floor(Math.random() * bgColor.length);
-    }, []) // Solo se calcula una vez cuando el componente se monta.
 
     const isOnline = onlineUser?.includes(userId)
 
     return (
-        <div className={`  flex justify-center items-center  rounded-full shadow  text-xl font-bold relative`} style={{ width: width + "px", height: height + "px" }}>
+        <div className={` text-white  flex justify-center items-center  rounded-full shadow  text-xl font-bold relative`} style={{ width: width + "px", height: height + "px" }}>
             {
                 imageURL ? (
                     <img
@@ -67,12 +37,12 @@ function Avatar({ userId, name, imageURL, width, height }: AvatarProps) {
                         width={width}
                         height={height}
                         alt={name}
-                        className=" overflow-hidden rounded-full"
+                        className=" w-full h-full rounded-full object-cover object-center overflow-hidden"
 
                     />
                 ) : (
                     name ? (
-                        <div style={{ width: width + "px", height: height + "px" }} className={` overflow-hidden rounded-full flex justify-center items-center ${bgColor[ramdomNumber]}`}>
+                        <div style={{ width: width + "px", height: height + "px" }} className={` overflow-hidden rounded-full flex justify-center items-center bg-primary-lighter`}>
                             {avatarName}
                         </div>
                     ) : (
@@ -95,4 +65,4 @@ function Avatar({ userId, name, imageURL, width, height }: AvatarProps) {
 }
 
 // Usar React.memo para evitar renderizados innecesarios
-export default memo(Avatar);
+//export default memo(Avatar);

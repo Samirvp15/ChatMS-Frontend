@@ -59,7 +59,6 @@ export default function Home() {
 
     return () => {
       socketConnection.disconnect()
-      console.log('Connexion cerrada')
     }
 
   }, [dispatch])
@@ -69,7 +68,7 @@ export default function Home() {
   const basePath = location.pathname === '/'
 
   return (
-    <div className="grid lg:grid-cols-4 h-screen">
+    <div className="grid lg:grid-cols-[480px_auto] h-screen">
 
       {/* Sidebar a la izquierda (1 columna) */}
       <section className={`bg-white ${!basePath && "hidden"} lg:block`}>
@@ -82,7 +81,6 @@ export default function Home() {
           ${basePath && "hidden"}
           ml-0.5
           relative
-          md:col-span-3
           flex
           flex-col
           h-full
@@ -95,7 +93,6 @@ export default function Home() {
       <div
         className={`
           
-          md:col-span-3
           justify-center
           items-center
           flex-col
