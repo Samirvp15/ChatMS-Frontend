@@ -73,6 +73,7 @@ export default function Sidebar() {
         localStorage.clear()
     }
 
+
     return (
         <div className=" w-full h-full grid grid-cols-[auto_1fr]">
             <div className=" bg-primary w-20 h-full rounded-tr-2xl rounded-br-2xl py-5 flex flex-col justify-between text-slate-300">
@@ -137,7 +138,7 @@ export default function Sidebar() {
                                         />
                                     </div>
                                     <div className="ml-3">
-                                        <h3 className=' text-ellipsis line-clamp-1 font-semibold text-base text-slate-100'>{conv.userDetails.name}</h3>
+                                        <h3 className=' text-ellipsis line-clamp-1 font-semibold text-base text-slate-100'>{conv.userDetails.name} {user._id === conv.userDetails._id && "(Tú)"}</h3>
                                         <div className='text-xs flex items-center gap-1 text-slate-300 '>
                                             <div className='flex items-center gap-1 '>
                                                 {

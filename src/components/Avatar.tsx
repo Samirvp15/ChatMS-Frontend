@@ -8,10 +8,11 @@ interface AvatarProps {
     imageURL: string,
     width: number,
     height: number,
+    isOnlineIcon?: boolean
 }
 
 
-export default function Avatar({ userId, name, imageURL, width, height }: AvatarProps) {
+export default function Avatar({ userId, name, imageURL, width, height, isOnlineIcon = true }: AvatarProps) {
 
     const onlineUser = useAppSelector(state => state.user.onlineUser)
 
@@ -52,7 +53,7 @@ export default function Avatar({ userId, name, imageURL, width, height }: Avatar
             }
 
             {
-                isOnline && (
+                isOnline && isOnlineIcon && (
                     <div className=" bg-slate-200 p-1 absolute bottom-1 -right-2.5  z-10 rounded-full">
                         <div className=" bg-green-500 p-1.5 relative bottom-0 right-0  z-10 rounded-full"></div>
 

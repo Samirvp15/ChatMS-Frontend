@@ -96,22 +96,27 @@ export default function EditUserDetails({ onClose, user }: EditUserDetailsProps)
 
 
     return (
-        <div className=" absolute top-0 bottom-0 left-0 right-0 bg-gray-700/40 text-white  flex justify-center items-center z-50">
-            <div className=" bg-primary-lighter p-4 m-1 rounded w-full max-w-sm">
-                <h2 className=" font-semibold text-3xl">Detalles de Perfil</h2>
-                <p className=" text-sm">Edita los datos del perfil</p>
-
-                <form className="grid gap-5 mt-3 text-slate-100" onSubmit={handleSubmit} >
+        <div className="  absolute top-0 bottom-0 left-0 right-0 bg-secondary/60 text-white  flex justify-center items-center z-50">
+            <div className=" bg-primary p-5 m-1 rounded-3xl w-full max-w-md border-2 border-white">
+                <h2 className=" mb-1 font-semibold text-3xl">Detalles de Perfil</h2>
+                <p className=" mb-3 text-sm">Edita los datos del perfil</p>
+                <Divider />
+                <form className="grid gap-5 mt-3 text-slate-100 bg-primary-lighter/40 rounded-3xl p-5" onSubmit={handleSubmit} >
 
                     <div>
                         <div>Foto de Perfil:</div>
-                        <div className="w-fit mx-auto mb-2 flex justify-center items-center flex-col">
+                        <div className="w-fit mx-auto mb-2 flex justify-center items-center rounded-full flex-col">
+                            <div className=" bg-secondary/40 p-3 rounded-full">
                             <Avatar
                                 userId={data.userId}
                                 name={data.name}
                                 imageURL={data.profile_pic}
-                                height={220}
-                                width={220} />
+                                height={250}
+                                width={250}
+                                isOnlineIcon={false}
+                                />
+
+                            </div>
                             <label htmlFor="profile_pic">
                                 <button type="button" className=" cursor-pointer font-semibold" onClick={handleOpenUploadPhoto}>Cambiar Foto</button>
 
@@ -142,8 +147,8 @@ export default function EditUserDetails({ onClose, user }: EditUserDetailsProps)
                     <Divider />
 
                     <div className="flex justify-end gap-2 mt-5">
-                        <button onClick={onClose} className="border-primary transition-all cursor-pointer font-semibold hover:bg-red-600 hover:text-white rounded-2xl border-2 px-4 py-2">Cancelar</button>
-                        <button onClick={handleSubmit} className="border-primary transition-all cursor-pointer font-semibold hover:bg-emerald-600 hover:text-white rounded-2xl border-2 px-4 py-2">Guardar Cambios</button>
+                        <button onClick={onClose} className="border-primary-lighter transition-all cursor-pointer font-semibold hover:bg-red-600 hover:text-white rounded-2xl border-2 px-4 py-2">Cancelar</button>
+                        <button onClick={handleSubmit} className="border-primary-lighter transition-all cursor-pointer font-semibold hover:bg-emerald-600 hover:text-white rounded-2xl border-2 px-4 py-2">Guardar Cambios</button>
                     </div>
                 </form>
             </div>
