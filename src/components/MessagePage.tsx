@@ -127,7 +127,7 @@ export default function MessagePage() {
       })
 
       socketConnection.on('message', (data) => {
-        console.log('message data', data)
+        console.log('messages data: ', data)
         setAllMessage(data) 
       })
 
@@ -148,7 +148,6 @@ export default function MessagePage() {
 
   const handleSendMessage = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log('mensaje:', message)
 
     if (message.text || message.imageURL || message.videoURL) {
       if (socketConnection) {
@@ -215,11 +214,11 @@ export default function MessagePage() {
   }}>
 
         {/**all message show here */}
-        <div className='flex flex-col gap-2 py-2 mx-2' ref={currentMessage}>
+        <div className='flex flex-col gap-2 py-4 mx-8' ref={currentMessage}>
           {allMessage &&
             allMessage.map((msg, index) => {
               return (
-                <div key={index} className={` p-1 py-1 rounded w-fit max-w-[280px] md:max-w-sm lg:max-w-md ${user._id === msg?.msgByUserId ? "ml-auto bg-emerald-700" : "bg-primary"}`}>
+                <div key={index} className={` p-3 py-1.5 rounded-2xl w-fit max-w-[280px] md:max-w-sm lg:max-w-md ${user._id === msg.msgByUserId ? "ml-auto bg-emerald-800 rounded-tr-none " : "bg-primary rounded-tl-none"}`}>
                   <div className='w-full relative'>
                     {
                       msg?.imageURL && (
@@ -239,8 +238,8 @@ export default function MessagePage() {
                       )
                     }
                   </div>
-                  <p className=' text-white px-2'>{msg.text}</p>
-                  <p className=' text-slate-100 text-xs ml-auto w-fit'>{moment(msg.createdAt).format('LT').toLocaleLowerCase()}</p>
+                  <p className=' text-white'>{msg.text}</p>
+                  <p className=' text-slate-300 text-xs ml-auto w-fit'>{moment(msg.createdAt).format('LT').toLocaleLowerCase()}</p>
                 </div>
               )
             })
@@ -305,15 +304,15 @@ export default function MessagePage() {
           {/**video and image */}
           {
             openImageVideoUpload && (
-              <div className='bg-primary-lighter shadow rounded absolute bottom-14 w-36 p-2'>
+              <div className='bg-primary-lighter rounded absolute bottom-16 w-36 p-2'>
                 <form>
-                  <label htmlFor='uploadImage' className='flex items-center p-2 px-3 gap-3 hover:bg-secondary hover:rounded cursor-pointer'>
+                  <label htmlFor='uploadImage' className='flex items-center p-2 px-3 gap-3 hover:bg-primary hover:rounded cursor-pointer'>
                     <div className='text-blue-600'>
                       <FaImage size={18} />
                     </div>
                     <p className=" text-slate-200">Imagen</p>
                   </label>
-                  <label htmlFor='uploadVideo' className='flex items-center p-2 px-3 gap-3 hover:bg-secondary hover:rounded cursor-pointer'>
+                  <label htmlFor='uploadVideo' className='flex items-center p-2 px-3 gap-3 hover:bg-primary hover:rounded cursor-pointer'>
                     <div className='text-purple-500'>
                       <FaVideo size={18} />
                     </div>
