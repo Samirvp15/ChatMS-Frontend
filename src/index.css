@@ -16,9 +16,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+/*2a4236  2A4236 */
 @theme {
-  --color-primary: #0bce85;
-  --color-secondary: #0BE493;
+  --color-primary: rgb(2, 48, 45);
+  --color-primary-lighter: rgb(42, 77, 80);
+  --color-secondary: rgb(3, 30, 29);
 
 }

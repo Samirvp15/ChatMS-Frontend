@@ -23,13 +23,13 @@ export default function MessagePage() {
     online: false
   }
 
-  const messageData = {
-    text: "",
-    imageUrl: "",
-    videoUrl: "",
-    createdAt: "",
-    msgByUserId: "",
-  }
+  // interface messageData  {
+  //   text: "",
+  //   imageUrl: "",
+  //   videoUrl: "",
+  //   createdAt: "",
+  //   msgByUserId: "",
+  // }
 
   const params = useParams()
   const user = useAppSelector(state => state.user)
@@ -39,9 +39,20 @@ export default function MessagePage() {
 
 
   const [openImageVideoUpload, setOpenImageVideoUpload] = useState(false)
-  const [message, setMessage] = useState(messageData)
+  const [message, setMessage] = useState({
+    text: "",
+    imageURL: "",
+    videoURL: ""
+  })
   const [loading, setLoading] = useState(false)
-  const [allMessage, setAllMessage] = useState<typeof messageData[]>([])
+  const [allMessage, setAllMessage] = useState([{
+    text: "",
+    imageURL: "",
+    videoURL: "",
+    createdAt: "",
+    msgByUserId: "",
+
+  }])
   const currentMessage = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -62,10 +73,11 @@ export default function MessagePage() {
     setLoading(false)
     setOpenImageVideoUpload(false)
 
+
     setMessage(preve => {
       return {
         ...preve,
-        imageUrl: uploadPhoto.url
+        imageURL: uploadPhoto.url
       }
     })
   }
@@ -73,7 +85,7 @@ export default function MessagePage() {
     setMessage(preve => {
       return {
         ...preve,
-        imageUrl: ""
+        imageURL: ""
       }
     })
   }
@@ -89,7 +101,7 @@ export default function MessagePage() {
     setMessage(preve => {
       return {
         ...preve,
-        videoUrl: uploadPhoto.url
+        videoURL: uploadPhoto.url
       }
     })
   }
@@ -97,7 +109,7 @@ export default function MessagePage() {
     setMessage(preve => {
       return {
         ...preve,
-        videoUrl: ""
+        videoURL: ""
       }
     })
   }
@@ -114,7 +126,7 @@ export default function MessagePage() {
 
       socketConnection.on('message', (data) => {
         console.log('message data', data)
-        setAllMessage(data)
+        setAllMessage(data) 
       })
 
 
@@ -122,7 +134,7 @@ export default function MessagePage() {
   }, [socketConnection, params?.userId, user])
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
+    const { value } = e.target
 
     setMessage(preve => {
       return {
@@ -134,32 +146,33 @@ export default function MessagePage() {
 
   const handleSendMessage = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
+    console.log('mensaje:', message)
 
-    if (message.text || message.imageUrl || message.videoUrl) {
+    if (message.text || message.imageURL || message.videoURL) {
       if (socketConnection) {
         socketConnection.emit('new-message', {
           sender: user?._id,
           receiver: params.userId,
           text: message.text,
-          imageUrl: message.imageUrl,
-          videoUrl: message.videoUrl,
+          imageURL: message.imageURL,
+          videoURL: message.videoURL,
           msgByUserId: user?._id
         })
         setMessage({
           text: "",
-          imageUrl: "",
-          videoUrl: "",
-          createdAt: "",
-          msgByUserId: ""
+          imageURL: "",
+          videoURL: "",
+          //createdAt: "",
+          // msgByUserId: ""
         })
       }
     }
   }
 
   return (
-    <div className="flex flex-col h-full" >
-      <header className="sticky top-0 h-16 bg-slate-300 z-10 flex justify-between items-center px-5">
-        <div className=" flex items-center gap-5">
+    <div className="flex flex-col h-full max-h-screen" >
+      <header className="sticky top-0 h-16 bg-primary z-10 flex justify-between items-center px-5">
+        <div className=" flex items-center gap-5 text-white">
           <Link to={'/'} className="lg:hidden">
             <FaAngleLeft size={25} />
           </Link>
@@ -176,13 +189,13 @@ export default function MessagePage() {
           <div>
             <h3 className=" font-semibold text-lg ">{dataUser.name}</h3>
             <p className="  text-sm">{
-              dataUser.online ? <span className=" text-primary">En linea</span> : <span className=" text-slate-600">Desconectado</span>
+              dataUser.online ? <span className=" text-emerald-300">En linea</span> : <span className=" text-slate-400">Desconectado</span>
             }</p>
           </div>
         </div>
 
         <div>
-          <button className=" cursor-pointer hover:text-primary">
+          <button className=" cursor-pointer text-slate-300 hover:text-white">
             <HiDotsVertical size={20} />
           </button>
         </div>
@@ -190,36 +203,37 @@ export default function MessagePage() {
 
 
       {/***show all message */}
-      <section className='flex-1 overflow-y-auto bg-slate-200 bg-opacity-50'>
-
+      <section className="flex-1  overflow-y-scroll scrollbar bg-opacity-50 h-[calc(100vh-8rem)]   bg-center bg-cover" style={{
+    backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/chatWallpaper.jpg')"
+  }}>
 
         {/**all message show here */}
         <div className='flex flex-col gap-2 py-2 mx-2' ref={currentMessage}>
           {allMessage &&
             allMessage.map((msg, index) => {
               return (
-                <div className={` p-1 py-1 rounded w-fit max-w-[280px] md:max-w-sm lg:max-w-md ${user._id === msg?.msgByUserId ? "ml-auto bg-teal-100" : "bg-white"}`}>
+                <div key={index} className={` p-1 py-1 rounded w-fit max-w-[280px] md:max-w-sm lg:max-w-md ${user._id === msg?.msgByUserId ? "ml-auto bg-emerald-700" : "bg-primary"}`}>
                   <div className='w-full relative'>
                     {
-                      msg?.imageUrl && (
+                      msg?.imageURL && (
                         <img
-                          src={msg?.imageUrl}
+                          src={msg?.imageURL}
                           className='w-full h-full object-scale-down'
                         />
                       )
                     }
                     {
-                      msg?.videoUrl && (
+                      msg?.videoURL && (
                         <video
-                          src={msg.videoUrl}
+                          src={msg.videoURL}
                           className='w-full h-full object-scale-down'
                           controls
                         />
                       )
                     }
                   </div>
-                  <p className='px-2'>{msg.text}</p>
-                  <p className='text-xs ml-auto w-fit'>{moment(msg.createdAt).format('hh:mm')}</p>
+                  <p className=' text-white px-2'>{msg.text}</p>
+                  <p className=' text-slate-100 text-xs ml-auto w-fit'>{moment(msg.createdAt).format('LT').toLocaleLowerCase()}</p>
                 </div>
               )
             })
@@ -229,14 +243,14 @@ export default function MessagePage() {
 
         {/**upload Image display */}
         {
-          message.imageUrl && (
+          message.imageURL && (
             <div className='w-full h-full sticky bottom-0 bg-slate-700 bg-opacity-30 flex justify-center items-center rounded overflow-hidden'>
               <div className='w-fit p-2 absolute top-0 right-0 cursor-pointer hover:text-red-600' onClick={handleClearUploadImage}>
                 <IoClose size={30} />
               </div>
               <div className='bg-white p-3'>
                 <img
-                  src={message.imageUrl}
+                  src={message.imageURL}
                   alt='uploadImage'
                   className='aspect-square w-full h-full max-w-sm m-2 object-scale-down'
                 />
@@ -247,14 +261,14 @@ export default function MessagePage() {
 
         {/**upload video display */}
         {
-          message.videoUrl && (
+          message.videoURL && (
             <div className='w-full h-full sticky bottom-0 bg-slate-700 bg-opacity-30 flex justify-center items-center rounded overflow-hidden'>
               <div className='w-fit p-2 absolute top-0 right-0 cursor-pointer hover:text-red-600' onClick={handleClearUploadVideo}>
                 <IoClose size={30} />
               </div>
               <div className='bg-white p-3'>
                 <video
-                  src={message.videoUrl}
+                  src={message.videoURL}
                   className='aspect-square w-full h-full max-w-sm m-2 object-scale-down'
                   controls
                   muted
@@ -275,28 +289,28 @@ export default function MessagePage() {
       </section>
 
       {/**send message */}
-      <section className='h-16 bg-slate-500 flex items-center px-5 gap-4 '>
+      <section className='h-16 bg-primary flex items-center px-5 gap-4 '>
         <div className='relative  '>
-          <button onClick={handleUploadImageVideoOpen} className='flex justify-center items-center w-11 h-11 rounded-full cursor-pointer hover:bg-primary text-primary hover:text-white'>
+          <button onClick={handleUploadImageVideoOpen} className='flex justify-center items-center w-11 h-11 rounded-full cursor-pointer hover:bg-secondary/40 text-slate-400 hover:text-white'>
             <FaPlus size={20} />
           </button>
 
           {/**video and image */}
           {
             openImageVideoUpload && (
-              <div className='bg-white shadow rounded absolute bottom-14 w-36 p-2'>
+              <div className='bg-primary-lighter shadow rounded absolute bottom-14 w-36 p-2'>
                 <form>
-                  <label htmlFor='uploadImage' className='flex items-center p-2 px-3 gap-3 hover:bg-slate-200 cursor-pointer'>
-                    <div className='text-primary'>
+                  <label htmlFor='uploadImage' className='flex items-center p-2 px-3 gap-3 hover:bg-secondary hover:rounded cursor-pointer'>
+                    <div className='text-blue-600'>
                       <FaImage size={18} />
                     </div>
-                    <p>Image</p>
+                    <p className=" text-slate-200">Imagen</p>
                   </label>
-                  <label htmlFor='uploadVideo' className='flex items-center p-2 px-3 gap-3 hover:bg-slate-200 cursor-pointer'>
+                  <label htmlFor='uploadVideo' className='flex items-center p-2 px-3 gap-3 hover:bg-secondary hover:rounded cursor-pointer'>
                     <div className='text-purple-500'>
                       <FaVideo size={18} />
                     </div>
-                    <p>Video</p>
+                    <p className=" text-slate-200">Video</p>
                   </label>
 
                   <input
@@ -324,11 +338,11 @@ export default function MessagePage() {
           <input
             type='text'
             placeholder='Escribe un mensaje ...'
-            className='w-full lg:mx-12 rounded-2xl outline-none bg-slate-300 p-5 my-2'
+            className='w-full lg:mx-12 rounded-2xl outline-none text-slate-200 bg-primary-lighter p-5 my-2'
             value={message.text}
             onChange={handleOnChange}
           />
-          <button className='text-primary cursor-pointer hover:text-secondary'>
+          <button className='text-slate-400 cursor-pointer hover:text-white'>
             <IoMdSend size={28} />
           </button>
         </form>

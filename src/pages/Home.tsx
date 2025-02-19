@@ -59,6 +59,7 @@ export default function Home() {
 
     return () => {
       socketConnection.disconnect()
+      console.log('Connexion cerrada')
     }
 
   }, [dispatch])
@@ -74,11 +75,12 @@ export default function Home() {
       <section className={`bg-white ${!basePath && "hidden"} lg:block`}>
         <Sidebar />
       </section>
-
+     
       {/* Zona de chat (3 columnas) */}
       <section
         className={`
           ${basePath && "hidden"}
+          ml-0.5
           relative
           md:col-span-3
           flex
