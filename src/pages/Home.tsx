@@ -92,7 +92,7 @@ export default function Home() {
       {/* Imagen/logo central cuando sí es basePath */}
       <div
         className={`
-          
+          bg-white
           justify-center
           items-center
           flex-col
@@ -102,7 +102,7 @@ export default function Home() {
         `}
       >
         <img src="/logo.jpg" alt="logo" className="max-w-full" />
-        <p className="text-md mt-4 text-slate-600 italic text-center">
+        <p className="text-md mt-4 text-slate-800 italic text-center">
           {`"Bienvenido a Chat MS donde cada conversación cuenta.`}
           <br />
           {`Conecta, comparte y crea momentos inolvidables."`}

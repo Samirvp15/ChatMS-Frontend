@@ -56,38 +56,38 @@ export default function CheckEmail() {
 
 
   return (
-    <div className=' mt-5'>
-      <div className=' bg-white w-full max-w-sm  rounded overflow-hidden p-4 mx-auto'>
-        <div className="w-fit mx-auto mb-2">
-          <PiUserCircle size={80} />
 
-        </div>
-        <h3>Bienvenidos a Chat MS</h3>
-
-
-        <form onSubmit={handleSubmit} className=' grid gap-4'>
-
-
-          <div className=' flex flex-col gap-1'>
-            <label htmlFor='email'>Correo:</label>
-            <input type="email"
-              name="email"
-              id="email"
-              placeholder='Ingresa tu correo'
-              className=' bg-slate-200 px-2 py-1 focus:outline-primary'
-              value={data.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-
-          <button className=' bg-primary text-lg px-4 py-1 hover:bg-secondary rounded my-3 font-bold transition-all hover:text-white'>Ingresa tu correo</button>
-
-        </form>
-        <p className=' text-center'>Usuario nuevo?<Link to={'/register'} className=' text-primary font-bold hover:text-secondary ml-2 hover:underline'>Registrate</Link></p>
+    <div className=' mt-5 bg-white w-full max-w-sm  rounded overflow-hidden p-4 mx-auto'>
+      <div className="w-fit mx-auto mb-2">
+        <PiUserCircle size={80} />
 
       </div>
+      <h3>Bienvenidos a Chat MS</h3>
+
+
+      <form onSubmit={handleSubmit} className=' grid gap-4'>
+
+
+        <div className=' flex flex-col gap-1'>
+          <label htmlFor='email'>Correo:</label>
+          <input type="email"
+            name="email"
+            id="email"
+            placeholder='Ingresa tu correo'
+            className=' bg-slate-200 px-2 py-1 focus:outline-primary'
+            value={data.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+
+        <button className=' bg-emerald-700 text-white text-lg px-4 py-1 hover:bg-emerald-500 rounded my-3 font-bold transition-all'>Ingresa tu correo</button>
+
+      </form>
+      <p className=' text-center'>Usuario nuevo?<Link to={'/register'} className=' text-emerald-700 font-bold hover:text-emerald-500 ml-2 hover:underline'>Registrate</Link></p>
+
     </div>
+
   )
 }

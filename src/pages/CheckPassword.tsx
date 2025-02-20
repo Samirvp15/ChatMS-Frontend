@@ -71,44 +71,42 @@ export default function CheckPassword() {
 
 
   return (
-    <div className=' mt-5'>
-      <div className=' bg-white w-full max-w-md  rounded overflow-hidden p-4 mx-auto'>
-        <div className="w-fit mx-auto mb-2 flex justify-center items-center flex-col">
-          {/* <PiUserCircle size={80} /> */}
-          <Avatar
-            userId={location.state?._id}
-            name={location.state?.name}
-            imageURL={location.state?.profile_pic}
-            height={70}
-            width={70} />
-          <h2>{location.state?.name}</h2>
-        </div>
-        <h3>Bienvenidos a Chat MS</h3>
-
-
-        <form onSubmit={handleSubmit} className=' grid gap-4'>
-
-
-          <div className=' flex flex-col gap-1'>
-            <label htmlFor='password'>Contraseña:</label>
-            <input type="password"
-              name="password"
-              id="password"
-              placeholder='Ingresa tu contraseña'
-              className=' bg-slate-200 px-2 py-1 focus:outline-primary'
-              value={data.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-
-          <button className=' bg-primary text-lg px-4 py-1 hover:bg-secondary rounded my-3 font-bold transition-all hover:text-white'>Inicia Sesión</button>
-
-        </form>
-        <p className=' text-center'><Link to={'/forgot-password'} className=' text-primary font-bold hover:text-secondary ml-2 hover:underline'>Olvidaste la contraseña?</Link></p>
-
+    <div className='mt-5  bg-white w-full max-w-md  rounded overflow-hidden p-4 mx-auto'>
+      <div className="w-fit mx-auto mb-2 flex justify-center items-center flex-col">
+        {/* <PiUserCircle size={80} /> */}
+        <Avatar
+          userId={location.state?._id}
+          name={location.state?.name}
+          imageURL={location.state?.profile_pic}
+          height={70}
+          width={70} />
+        <h2>{location.state?.name}</h2>
       </div>
+      <h3>Bienvenidos a Chat MS</h3>
+
+
+      <form onSubmit={handleSubmit} className=' grid gap-4'>
+
+
+        <div className=' flex flex-col gap-1'>
+          <label htmlFor='password'>Contraseña:</label>
+          <input type="password"
+            name="password"
+            id="password"
+            placeholder='Ingresa tu contraseña'
+            className=' bg-slate-200 px-2 py-1 focus:outline-primary'
+            value={data.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+
+        <button className=' bg-emerald-700 text-lg px-4 py-1 hover:bg-emerald-500 rounded my-3 font-bold transition-all text-white'>Inicia Sesión</button>
+
+      </form>
+      <p className=' text-center'><Link to={'/forgot-password'} className=' text-emerald-700 font-bold hover:text-emerald-500  ml-2 hover:underline'>Olvidaste la contraseña?</Link></p>
+
     </div>
   )
 }

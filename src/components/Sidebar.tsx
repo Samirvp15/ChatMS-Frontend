@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
 import { FaImage } from "react-icons/fa6";
 import { AllUserType } from '../redux/userSlice'
+import moment from "moment";
 
 export default function Sidebar() {
 
@@ -138,6 +139,7 @@ export default function Sidebar() {
                                         />
                                     </div>
                                     <div className="ml-3">
+
                                         <h3 className=' text-ellipsis line-clamp-1 font-semibold text-base text-slate-100'>{conv.userDetails.name} {user._id === conv.userDetails._id && "(Tú)"}</h3>
                                         <div className='text-xs flex items-center gap-1 text-slate-300 '>
                                             <div className='flex items-center gap-1 '>
@@ -160,11 +162,14 @@ export default function Sidebar() {
                                             </div>
                                             <p className=' text-sm text-ellipsis line-clamp-1'>{conv.lastMsg.text}</p>
                                         </div>
+
                                     </div>
+
                                     {
-                                        Boolean(conv.unseenMsg) && (
-                                            <p className='text-xs w-6 h-6 flex justify-center items-center ml-auto p-1 bg-emerald-600 text-white font-semibold rounded-full'>{conv.unseenMsg}</p>
-                                        )
+                                        (conv.unseenMsg)
+                                            ? <p className='text-xs w-6 h-6 flex justify-center items-center ml-auto p-1 bg-emerald-600 text-white font-semibold rounded-full'>{conv.unseenMsg}</p>
+                                            : <p className="text-xs ml-auto text-slate-300">{moment(conv.lastMsg.createdAt).format('LT').toLocaleLowerCase()}</p>
+
                                     }
 
                                 </NavLink>

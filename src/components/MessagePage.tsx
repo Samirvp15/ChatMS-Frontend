@@ -23,7 +23,7 @@ export default function MessagePage() {
     online: false
   }
 
-  interface messageData  {
+  interface messageData {
     text: string,
     imageURL: string,
     videoURL: string,
@@ -44,9 +44,10 @@ export default function MessagePage() {
     text: "",
     imageURL: "",
     videoURL: "",
-    
+
   })
   const [loading, setLoading] = useState(false)
+
   const [allMessage, setAllMessage] = useState([{
     text: "",
     imageURL: "",
@@ -127,8 +128,7 @@ export default function MessagePage() {
       })
 
       socketConnection.on('message', (data) => {
-        console.log('messages data: ', data)
-        setAllMessage(data) 
+        setAllMessage(data)
       })
 
 
@@ -171,9 +171,9 @@ export default function MessagePage() {
   }
   const isCurrentUser = useMemo(
     () => location.pathname === "/" + user._id,
-    [location.pathname,user._id]
+    [location.pathname, user._id]
   );
-  
+
 
   return (
     <div className="flex flex-col h-full max-h-screen" >
@@ -210,8 +210,8 @@ export default function MessagePage() {
 
       {/***show all message */}
       <section className="flex-1  overflow-y-scroll scrollbar bg-opacity-50 h-[calc(100vh-8rem)]   bg-center bg-cover" style={{
-    backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/chatWallpaper.jpg')"
-  }}>
+        backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/chatWallpaper.jpg')"
+      }}>
 
         {/**all message show here */}
         <div className='flex flex-col gap-2 py-4 mx-8' ref={currentMessage}>
@@ -239,7 +239,12 @@ export default function MessagePage() {
                     }
                   </div>
                   <p className=' text-white'>{msg.text}</p>
-                  <p className=' text-slate-300 text-xs ml-auto w-fit'>{moment(msg.createdAt).format('LT').toLocaleLowerCase()}</p>
+                  <p className=' text-slate-300 text-xs ml-auto w-fit'>
+                    {msg.createdAt
+                      ? moment(msg.createdAt).format('LT').toLocaleLowerCase()
+                      : 'Cargando mensajes...'
+                    }
+                  </p>
                 </div>
               )
             })
@@ -293,6 +298,7 @@ export default function MessagePage() {
           )
         }
       </section>
+
 
       {/**send message */}
       <section className='h-16 bg-primary flex items-center px-5 gap-4 '>
