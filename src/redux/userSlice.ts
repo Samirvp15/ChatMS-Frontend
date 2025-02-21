@@ -49,9 +49,11 @@ export interface UserState {
     profile_pic: string,
     token: string,
     onlineUser?: string[],
-    socketConnection?: Socket | null
+    socketConnection?: Socket | null,
+    auth?: boolean
 
 }
+
 
 // Define the initial state using that type
 const initialState: UserState = {

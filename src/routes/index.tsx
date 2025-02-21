@@ -8,69 +8,31 @@ import Home from '../pages/Home';
 import MessagePage from '../components/MessagePage';
 import AuthLayout from '../layout/index';
 import ForgotPassword from '../pages/ForgotPassword';
+import ProtectedRoute from '../pages/ProtectedRoute';
 
 
 
 export function AppRouter() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Ruta principal */}
-        <Route path="/" element={<App />}>
+    <Routes>
+      {/* Ruta principal con layout común */}
+      <Route path="/" element={<App />}>
+        {/* Rutas públicas */}
+        <Route path="email" element={<AuthLayout><CheckEmail /></AuthLayout>} />
+        <Route path="register" element={<AuthLayout><Register /></AuthLayout>} />
+        <Route path="password" element={<AuthLayout><CheckPassword /></AuthLayout>} />
+        <Route path="forgot-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
 
-          {/* Rutas hijas */}
-          <Route path="register" element={<AuthLayout><Register /></AuthLayout>} />
-          <Route path="email" element={<AuthLayout><CheckEmail /></AuthLayout>} />
-          <Route path="password" element={<AuthLayout><CheckPassword /></AuthLayout>} />
-          <Route path="forgot-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
+        {/* Rutas protegidas */}
+        <Route element={<ProtectedRoute />}>
+          {/* Si se accede a '/' o a sus rutas hijas y el usuario no está autenticado, se redirige a '/email' */}
           <Route path="/" element={<Home />}>
-            {/* Ruta dinámica */}
             <Route path=":userId" element={<MessagePage />} />
           </Route>
         </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+      </Route>
+    </Routes>
+  </BrowserRouter>
+  )
 }
-/*export const router = createBrowserRouter([
-    {
-      path: '/',
-      element: <App />,
-      children: [
-        {
-          path: 'register',
-          element: (
-            <AuthLayout>
-              <Register />
-            </AuthLayout>
-          )
-        }, {
-          path: 'email',
-          element: (
-            <AuthLayout>
-              <CheckEmail />
-            </AuthLayout>
-          )
-        }, {
-          path: 'password',
-          element: (
-            <AuthLayout>
-              <CheckPassword />
-            </AuthLayout>
-          )
-        }, {
-          path: '',
-          element: <Home />,
-          children: [
-            {
-              path: ':userId',
-              element: <MessagePage />
-            }
-          ]
-        }
-      ]
-  
-    },
-  ]);
-  */
-

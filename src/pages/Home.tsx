@@ -14,7 +14,6 @@ export default function Home() {
   const navigate = useNavigate()
   const location = useLocation()
 
-
   const fetchUserDetails = async () => {
 
     try {
@@ -25,6 +24,7 @@ export default function Home() {
         withCredentials: true
       })
       dispatch(setUser(response.data.data))
+      
 
       if (response.data.data.logout) {
         dispatch(logout())
@@ -38,34 +38,38 @@ export default function Home() {
     }
   }
 
-  useEffect(() => {
+  useEffect(()=>{
     fetchUserDetails()
-  }, [])
+  },[])
 
+
+  
   // Socket Client Connection
   useEffect(() => {
-    const socketConnection = io(`${import.meta.env.VITE_BACKEND_URL}`, {
-      auth: {
-        token: localStorage.getItem('token')
-      },
-      transports: ["websocket"],
-    })
+      const socketConnection = io(`${import.meta.env.VITE_BACKEND_URL}`, {
+        auth: {
+          token: localStorage.getItem('token')
+        },
+        transports: ["websocket"],
+      })
 
-    socketConnection.on('onlineUser', (data) => {
-      dispatch(setOnlineUser(data))
-    })
+      socketConnection.on('onlineUser', (data) => {
+        dispatch(setOnlineUser(data))
+      })
 
-    dispatch(setSocketConnection(socketConnection))
+      dispatch(setSocketConnection(socketConnection))
 
-    return () => {
-      socketConnection.disconnect()
-    }
-
-  }, [dispatch])
+      return () => {
+        socketConnection.disconnect()
+      }
+    
+  }, [])
 
 
 
   const basePath = location.pathname === '/'
+
+
 
   return (
     <div className="grid lg:grid-cols-[480px_auto] h-screen">
@@ -74,7 +78,7 @@ export default function Home() {
       <section className={`bg-white ${!basePath && "hidden"} lg:block`}>
         <Sidebar />
       </section>
-     
+
       {/* Zona de chat (3 columnas) */}
       <section
         className={`

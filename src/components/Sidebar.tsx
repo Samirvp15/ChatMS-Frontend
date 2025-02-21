@@ -21,7 +21,7 @@ export default function Sidebar() {
     const [editUserOpen, setEditUserOpen] = useState(false)
     const [allUser, setAllUser] = useState<AllUserType[]>([])
     const [openSearchUser, setOpenSearchUser] = useState(false)
-    const socketConnection = useAppSelector(state => state?.user?.socketConnection)
+    const socketConnection = useAppSelector(state => state.user.socketConnection)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
@@ -69,12 +69,19 @@ export default function Sidebar() {
     }, [socketConnection, user])
 
     const handleLogout = () => {
+
+        if(socketConnection){
+            socketConnection.disconnect()
+        }
+       
+        localStorage.removeItem('token')
         dispatch(logout())
+        
         navigate("/email")
-        localStorage.clear()
+
     }
 
-
+   
     return (
         <div className=" w-full h-full grid grid-cols-[auto_1fr]">
             <div className=" bg-primary w-20 h-full rounded-tr-2xl rounded-br-2xl py-5 flex flex-col justify-between text-slate-300">
