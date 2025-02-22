@@ -13,6 +13,7 @@ import { logout } from "../redux/userSlice";
 import { FaImage } from "react-icons/fa6";
 import { AllUserType } from '../redux/userSlice'
 import moment from "moment";
+import Divider from "./Divider";
 
 export default function Sidebar() {
 
@@ -70,18 +71,18 @@ export default function Sidebar() {
 
     const handleLogout = () => {
 
-        if(socketConnection){
+        if (socketConnection) {
             socketConnection.disconnect()
         }
-       
+
         localStorage.removeItem('token')
         dispatch(logout())
-        
+
         navigate("/email")
 
     }
 
-   
+
     return (
         <div className=" w-full h-full grid grid-cols-[auto_1fr]">
             <div className=" bg-primary w-20 h-full rounded-tr-2xl rounded-br-2xl py-5 flex flex-col justify-between text-slate-300">
@@ -134,53 +135,59 @@ export default function Sidebar() {
                     {
                         allUser.map((conv) => {
                             return (
-                                <NavLink to={"/" + conv.userDetails._id} key={conv._id} className={`${location.pathname === "/" + conv.userDetails._id && 'bg-primary-lighter hover:bg-primary-lighter'} flex items-center gap-2 py-3 px-2 border border-transparent  hover:border-primary rounded cursor-pointer  hover:bg-primary `}>
-                                    <div>
-                                        <Avatar
-                                            userId={conv.userDetails._id}
-                                            imageURL={conv.userDetails.profile_pic}
-                                            name={conv.userDetails.name}
-                                            width={50}
-                                            height={50}
+                                <>
+                                    <NavLink to={"/" + conv.userDetails._id} key={conv._id} className={`${location.pathname === "/" + conv.userDetails._id && 'bg-primary-lighter hover:bg-primary-lighter'} flex items-center gap-2 py-3 px-2 border border-transparent  hover:border-primary rounded cursor-pointer  hover:bg-primary `}>
+                                        <div>
+                                            <Avatar
+                                                userId={conv.userDetails._id}
+                                                imageURL={conv.userDetails.profile_pic}
+                                                name={conv.userDetails.name}
+                                                width={50}
+                                                height={50}
 
-                                        />
-                                    </div>
-                                    <div className="ml-3">
+                                            />
+                                        </div>
+                                        <div className="ml-3">
 
-                                        <h3 className=' text-ellipsis line-clamp-1 font-semibold text-base text-slate-100'>{conv.userDetails.name} {user._id === conv.userDetails._id && "(Tú)"}</h3>
-                                        <div className='text-xs flex items-center gap-1 text-slate-300 '>
-                                            <div className='flex items-center gap-1 '>
-                                                {
-                                                    conv.lastMsg.imageURL && (
-                                                        <div className='flex items-center gap-1'>
-                                                            <span><FaImage /></span>
-                                                            {!conv.lastMsg.text && <span>Imagen</span>}
-                                                        </div>
-                                                    )
-                                                }
-                                                {
-                                                    conv.lastMsg.videoURL && (
-                                                        <div className='flex items-center gap-1'>
-                                                            <span><FaVideo /></span>
-                                                            {!conv.lastMsg.text && <span>Video</span>}
-                                                        </div>
-                                                    )
-                                                }
+                                            <h3 className=' text-ellipsis line-clamp-1 font-semibold text-base text-slate-100'>{conv.userDetails.name} {user._id === conv.userDetails._id && "(Tú)"}</h3>
+                                            <div className='text-xs flex items-center gap-1 text-slate-300 '>
+                                                <div className='flex items-center gap-1 '>
+                                                    {
+                                                        conv.lastMsg.imageURL && (
+                                                            <div className='flex items-center gap-1'>
+                                                                <span><FaImage /></span>
+                                                                {!conv.lastMsg.text && <span>Imagen</span>}
+                                                            </div>
+                                                        )
+                                                    }
+                                                    {
+                                                        conv.lastMsg.videoURL && (
+                                                            <div className='flex items-center gap-1'>
+                                                                <span><FaVideo /></span>
+                                                                {!conv.lastMsg.text && <span>Video</span>}
+                                                            </div>
+                                                        )
+                                                    }
+                                                </div>
+                                                <p className=' text-sm text-ellipsis line-clamp-1'>{conv.lastMsg.text}</p>
                                             </div>
-                                            <p className=' text-sm text-ellipsis line-clamp-1'>{conv.lastMsg.text}</p>
+
                                         </div>
 
+                                        {
+                                            (conv.unseenMsg)
+                                                ? <p className='text-xs w-6 h-6 flex justify-center items-center ml-auto p-1 bg-emerald-600 text-white font-semibold rounded-full'>{conv.unseenMsg}</p>
+                                                : <p className="text-xs ml-auto text-slate-300">{moment(conv.lastMsg.createdAt).format('LT').toLocaleLowerCase()}</p>
+
+                                        }
+
+                                    </NavLink>
+                                    <div className=" opacity-25 my-1">
+                                        <Divider />
                                     </div>
-
-                                    {
-                                        (conv.unseenMsg)
-                                            ? <p className='text-xs w-6 h-6 flex justify-center items-center ml-auto p-1 bg-emerald-600 text-white font-semibold rounded-full'>{conv.unseenMsg}</p>
-                                            : <p className="text-xs ml-auto text-slate-300">{moment(conv.lastMsg.createdAt).format('LT').toLocaleLowerCase()}</p>
-
-                                    }
-
-                                </NavLink>
+                                </>
                             )
+
                         })
                     }
 
