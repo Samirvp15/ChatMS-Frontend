@@ -126,8 +126,8 @@ export default function Register() {
           <div className=' flex flex-col gap-1 '>
             <label htmlFor='profile_pic'>Foto de Perfil:
               <div
-                className=' bg-slate-200 h-14 flex justify-center items-center border rounded hover:border-primary cursor-pointer' >
-                <p className=' text-sm max-w-[300px] text-ellipsis line-clamp-1'>
+                className=' bg-slate-300 h-14 flex justify-center items-center  rounded cursor-pointer outline-none shadow hover:shadow-emerald-500' >
+                <p className=' text-black text-sm max-w-[300px] text-ellipsis line-clamp-1'>
                   {
                     uploadPhoto?.name
                       ? uploadPhoto.name
@@ -136,7 +136,7 @@ export default function Register() {
                 </p>
                 {
                   uploadPhoto?.name && (
-                    <button className='  text-lg ml-2 hover:text-red-600' onClick={handleClearUploadPhoto}>
+                    <button className='  text-xl ml-4 hover:text-red-600' onClick={handleClearUploadPhoto}>
                       <IoClose />
                     </button>
                   )
@@ -155,10 +155,10 @@ export default function Register() {
 
           </div>
 
-          <button className=' bg-primary text-lg px-4 py-1 hover:bg-secondary rounded my-3 font-bold transition-all hover:text-white'>Registrar</button>
+          <button className=' bg-emerald-700 text-lg px-4 py-1 hover:bg-emerald-500 rounded my-3 font-bold transition-all text-white'>Registrar</button>
 
         </form>
-        <p className=' text-center'>Ya tienes una cuenta?<Link to={'/email'} className=' text-primary font-bold hover:text-secondary ml-2 hover:underline'>Inicia Sesion</Link></p>
+        <p className=' text-center'>Ya tienes una cuenta?<Link to={'/email'} className=' text-emerald-700 font-bold hover:text-emerald-500 ml-2 hover:underline'>Inicia Sesion</Link></p>
 
       </div>
     </div>
