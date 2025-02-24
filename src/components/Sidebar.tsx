@@ -4,7 +4,7 @@ import { BiLogOut } from "react-icons/bi";
 import { NavLink, useLocation, useNavigate } from "react-router";
 import Avatar from "./Avatar";
 import { useAppSelector } from "../hooks/reduxHook";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import EditUserDetails from "./EditUserDetails";
 import { FiArrowUpLeft } from "react-icons/fi";
 import SearchUser from "./SearchUser";
@@ -135,8 +135,8 @@ export default function Sidebar() {
                     {
                         allUser.map((conv) => {
                             return (
-                                <>
-                                    <NavLink to={"/" + conv.userDetails._id} key={conv._id} className={`${location.pathname === "/" + conv.userDetails._id && 'bg-primary-lighter hover:bg-primary-lighter'} flex items-center gap-2 py-3 px-2 border border-transparent  hover:border-primary rounded cursor-pointer  hover:bg-primary `}>
+                                <Fragment key={conv._id}>
+                                    <NavLink to={"/" + conv.userDetails._id} className={`${location.pathname === "/" + conv.userDetails._id && 'bg-primary-lighter hover:bg-primary-lighter'} flex items-center gap-2 py-3 px-2 border border-transparent  hover:border-primary rounded cursor-pointer  hover:bg-primary `}>
                                         <div>
                                             <Avatar
                                                 userId={conv.userDetails._id}
@@ -185,7 +185,7 @@ export default function Sidebar() {
                                     <div className=" opacity-25 my-1">
                                         <Divider />
                                     </div>
-                                </>
+                                    </Fragment>
                             )
 
                         })
