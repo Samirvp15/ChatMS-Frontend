@@ -54,6 +54,13 @@ export default function EditUserDetails({ onClose, user }: EditUserDetailsProps)
         const file = e.target.files![0]
         if (!file) return
 
+        // Validar que el archivo sea una imagen (basado en su tipo MIME)
+        if (!file.type.startsWith('image/')) {
+            toast.error('Seleccione una imagen válida')
+            return
+        }
+
+
         const uploadPhoto = await uploadFile(file)
 
         setData((prev) => {
@@ -96,32 +103,37 @@ export default function EditUserDetails({ onClose, user }: EditUserDetailsProps)
 
 
     return (
-        <div className="  absolute top-0 bottom-0 left-0 right-0 bg-secondary/60 text-white  flex justify-center items-center z-50">
-            <div className=" bg-primary p-5 m-1 rounded-3xl w-full max-w-md border-2 border-white">
-                <h2 className=" mb-1 font-semibold text-3xl">Detalles de Perfil</h2>
-                <p className=" mb-3 text-sm">Edita los datos del perfil</p>
+        <div className="fixed top-0 left-0 w-full h-full bg-secondary/60 z-50 flex items-center justify-center p-8 sm:p-2">
+            <div className="bg-primary p-4 sm:p-5 rounded-3xl w-full max-w-lg border-2 border-white 
+                  overflow-auto max-h-screen text-white">
+                <h2 className="mb-1 font-semibold text-2xl sm:text-3xl">Detalles de Perfil</h2>
+                <p className="mb-3 text-sm">Edita los datos del perfil</p>
                 <Divider />
-                <form className="grid gap-5 mt-3 text-slate-100 bg-primary-lighter/40 rounded-3xl p-5" onSubmit={handleSubmit} >
 
-                    <div>
-                        <div>Foto de Perfil:</div>
-                        <div className="w-fit mx-auto mb-2 flex justify-center items-center rounded-full flex-col">
-                            <div className=" bg-secondary/40 p-3 rounded-full">
-                            <Avatar
-                                userId={data.userId}
-                                name={data.name}
-                                imageURL={data.profile_pic}
-                                height={250}
-                                width={250}
-                                isOnlineIcon={false}
+                <form className="bg-primary-lighter/40 rounded-3xl p-3 sm:p-5" onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                        <div className="mb-2 font-medium">Foto de Perfil:</div>
+                        <div className="flex flex-col items-center">
+                            <div className="bg-secondary/40 p-3 rounded-full">
+                                <Avatar
+                                    userId={data.userId}
+                                    name={data.name}
+                                    imageURL={data.profile_pic}
+                                    height={150}
+                                    width={150}
+                                    isOnlineIcon={false}
                                 />
-
                             </div>
                             <label htmlFor="profile_pic">
-                                <button type="button" className=" cursor-pointer font-semibold" onClick={handleOpenUploadPhoto}>Cambiar Foto</button>
-
-
-                                <input type="file"
+                                <button
+                                    type="button"
+                                    className="cursor-pointer font-semibold mt-2"
+                                    onClick={handleOpenUploadPhoto}
+                                >
+                                    Cambiar Foto
+                                </button>
+                                <input
+                                    type="file"
                                     name="profile_pic"
                                     id="profile_pic"
                                     onChange={handleUploadPhoto}
@@ -132,26 +144,41 @@ export default function EditUserDetails({ onClose, user }: EditUserDetailsProps)
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-1">
-                        <label htmlFor="name">Nombre:</label>
+                    <Divider />
+
+                    <div className="flex flex-col gap-1 mt-4 mb-5">
+                        <label htmlFor="name" className="font-medium">Nombre:</label>
                         <input
                             type="text"
                             name="name"
                             id="name"
                             value={data.name}
                             onChange={handleOnChange}
-                            className=" w-full py-1 px-2 focus:outline-primary border rounded-xl"
+                            className="w-full py-2 px-3 text-slate-200 border rounded-xl focus:outline-primary"
                         />
                     </div>
 
                     <Divider />
 
                     <div className="flex justify-end gap-2 mt-5">
-                        <button onClick={onClose} className="border-primary-lighter transition-all cursor-pointer font-semibold hover:bg-red-600 hover:text-white rounded-2xl border-2 px-4 py-2">Cancelar</button>
-                        <button onClick={handleSubmit} className="border-primary-lighter transition-all cursor-pointer font-semibold hover:bg-emerald-600 hover:text-white rounded-2xl border-2 px-4 py-2">Guardar Cambios</button>
+                        <button
+                            onClick={onClose}
+                            className="border-primary-lighter transition-all cursor-pointer font-semibold
+                     hover:bg-red-600 hover:text-white rounded-2xl border-2 px-4 py-2"
+                        >
+                            Cancelar
+                        </button>
+                        <button
+                            onClick={handleSubmit}
+                            className="border-primary-lighter transition-all cursor-pointer font-semibold
+                     hover:bg-emerald-600 hover:text-white rounded-2xl border-2 px-4 py-2"
+                        >
+                            Guardar Cambios
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
+
     )
 }

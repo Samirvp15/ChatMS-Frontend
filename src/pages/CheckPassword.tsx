@@ -79,7 +79,9 @@ export default function CheckPassword() {
           name={location.state?.name}
           imageURL={location.state?.profile_pic}
           height={70}
-          width={70} />
+          width={70} 
+          isOnlineIcon={false}
+          />
         <h2>{location.state?.name}</h2>
       </div>
       <h3>Bienvenidos a Chat MS</h3>

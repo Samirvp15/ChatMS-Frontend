@@ -47,12 +47,12 @@ export default function SearchUser({ onClose }: SearchUserProps) {
 
     return (
         <div className=" fixed top-0 bottom-0 right-0 left-0 bg-secondary/60 p-8 sm:p-2 z-50">
-            <div className=" w-full max-w-lg mx-auto mt-10 ">
+            <div className=" w-full max-w-lg mx-auto mt-10  h-full max-h-screen ">
                 <div className="bg-slate-200 rounded-xl p-1 overflow-hidden flex">
                     <input
                         type="text"
                         placeholder="Busca usuarios por nombre o correo"
-                        className=" w-full outline-none py-1 h-full px-2"
+                        className=" w-full outline-none py-1 h-full  px-2"
                         onChange={(e) => setSearch(e.target.value)}
                         value={search}
                     />
@@ -62,7 +62,7 @@ export default function SearchUser({ onClose }: SearchUserProps) {
                     </div>
                 </div>
 
-                <div className=" bg-slate-200 mt-2 w-full p-4 rounded-xl">
+                <div className=" bg-slate-200 mt-2 w-full p-4 rounded-xl h-[calc(100vh-135px)] overflow-y-auto scrollbar ">
                     {
                         searchUser.length === 0 && !loading && (
                             <p className=" text-center text-slate-600">Usuario no encontrado.</p>

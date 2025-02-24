@@ -2,7 +2,7 @@
 import React, { ChangeEvent, useState } from 'react'
 import { IoClose } from 'react-icons/io5'
 import { Link, useNavigate } from 'react-router'
-import  uploadFile  from '../helpers/uploadFile'
+import uploadFile from '../helpers/uploadFile'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
@@ -31,13 +31,20 @@ export default function Register() {
     })
   }
 
-  const handleUploadPhoto = async(e: ChangeEvent<HTMLInputElement>) => {
+  const handleUploadPhoto = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0]
+    if (!file) return
+
+    // Validar que el archivo sea una imagen (basado en su tipo MIME)
+    if (!file.type.startsWith('image/')) {
+      toast.error('Seleccione una imagen válida')
+      return
+    }
 
     const uploadPhoto = await uploadFile(file)
     setUploadPhoto(file)
 
-    setData((prev)=>{
+    setData((prev) => {
       return {
         ...prev,
         profile_pic: uploadPhoto.url
@@ -51,24 +58,24 @@ export default function Register() {
     setUploadPhoto(undefined)
   }
 
-  const handleSubmit = async(e: ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const url = `${import.meta.env.VITE_BACKEND_URL}/api/register`
-    
+
     try {
 
-      const response = await axios.post(url,data)
-      toast.success(response.data.message) 
-      if(response.data.success){
+      const response = await axios.post(url, data)
+      toast.success(response.data.message)
+      if (response.data.success) {
         setData(dataUser)
         navigate('/email')
-      }     
-     
+      }
+
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error((error.response?.data?.message))
-        
+
       } else {
         toast.error('Ocurrio un error inesperado')
       }
@@ -76,10 +83,10 @@ export default function Register() {
   }
 
 
-
+ 
   return (
     <div className=' mt-5'>
-      <div className=' bg-white w-full max-w-sm  rounded overflow-hidden p-4 mx-auto'>
+      <div className=' bg-white w-full max-w-sm  h-[calc(100vh-220px)] rounded overflow-hidden overflow-y-auto scrollbar p-4 mx-auto'>
         <h3>Bienvenidos a Chat MS</h3>
 
 

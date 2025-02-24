@@ -71,6 +71,8 @@ export default function Sidebar() {
 
     const handleLogout = () => {
 
+
+
         if (socketConnection) {
             socketConnection.disconnect()
         }
@@ -82,7 +84,7 @@ export default function Sidebar() {
 
     }
 
-
+    const [showModal, setShowModal] = useState(false);
     return (
         <div className=" w-full h-full grid grid-cols-[auto_1fr]">
             <div className=" bg-primary w-20 h-full rounded-tr-2xl rounded-br-2xl py-5 flex flex-col justify-between text-slate-300">
@@ -98,9 +100,36 @@ export default function Sidebar() {
                 </div>
 
                 <div className="flex flex-col items-center gap-4">
-                    <button className="w-16 h-12 mx-auto flex justify-center items-center cursor-pointer hover:bg-secondary hover:rounded-4xl hover:text-white" title="Logout" onClick={handleLogout}>
+                    <button className="w-16 h-12 mx-auto flex justify-center items-center cursor-pointer hover:bg-secondary hover:rounded-4xl hover:text-white" title="Logout" onClick={() => setShowModal(true)}>
                         <BiLogOut size={25} />
                     </button>
+
+                    {showModal && (
+                        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-secondary/60 z-50 p-4 ">
+                            <div className="bg-white rounded-lg p-4 text-black max-w-sm w-full">
+                                <h2 className="text-lg font-bold mb-2">Cerrar sesión</h2>
+                                <p className="mb-4">¿Estás seguro de que deseas cerrar sesión?</p>
+                                <div className="flex justify-end gap-2">
+                                    <button
+                                        onClick={() => setShowModal(false)}
+                                        className="px-4 py-2 rounded border-primary-lighter border-1 hover:bg-gray-200 cursor-pointer"
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            handleLogout();
+                                            setShowModal(false);
+                                        }}
+                                        className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer"
+                                    >
+                                        Cerrar sesión
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     <button className=" cursor-pointer z-0 hover:bg-secondary hover:rounded-full p-1" title="User Profile" onClick={() => setEditUserOpen(true)}>
                         <Avatar
                             width={50}
@@ -185,7 +214,7 @@ export default function Sidebar() {
                                     <div className=" opacity-25 my-1">
                                         <Divider />
                                     </div>
-                                    </Fragment>
+                                </Fragment>
                             )
 
                         })

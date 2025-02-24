@@ -193,7 +193,7 @@ export default function MessagePage() {
           </div>
 
           <div>
-            <h3 className=" font-semibold text-lg ">{dataUser.name}  {isCurrentUser && "(Tú)"}</h3>
+            <h3 className=" font-semibold text-lg line-clamp-1 ">{dataUser.name}  {isCurrentUser && "(Tú)"}</h3>
             <p className="  text-sm">{
               dataUser.online ? <span className=" text-emerald-300">En linea</span> : <span className=" text-slate-400">Desconectado</span>
             }</p>
